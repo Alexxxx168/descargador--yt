@@ -18,10 +18,14 @@ def descargar_video():
     url = request.form.get('url')
     opcion = request.form.get('formato')
     
-    # Guardaremos el archivo usando el ID del video para evitar errores con caracteres raros
     ydl_opts = {
         'outtmpl': 'descargas/%(id)s.%(ext)s'
     }
+
+    # Le decimos a yt-dlp que use las cookies si el archivo secreto existe en Render
+    ruta_cookies = '/etc/secrets/cookies.txt'
+    if os.path.exists(ruta_cookies):
+        ydl_opts['cookiefile'] = ruta_cookies
 
     if opcion == "1":
         ydl_opts.update({
