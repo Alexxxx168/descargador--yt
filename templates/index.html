@@ -4,26 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descargador de YouTube</title>
+    
+    <!-- Importando la fuente VOLLKORN de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vollkorn:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f9f9f9; }
-        .contenedor { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: inline-block; }
-        input[type="text"], select { width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-        button { background-color: #ff0000; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; }
-        button:hover { background-color: #cc0000; }
+        /* ESTILOS GENERALES DE LA PÁGINA */
+        body {
+            font-family: 'Vollkorn', serif;
+            background-color: #1A1A1A; /* Jet Black */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .contenedor {
+            background-color: #1A1A1A;
+            border: 2px solid #6B1615; /* Deep Maroon */
+            box-shadow: 0 10px 25px rgba(107, 22, 21, 0.4); /* Sombra granate */
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h2 {
+            color: #6B1615; /* Deep Maroon */
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* ESTILOS DE LOS CAMPOS DE TEXTO Y SELECCIÓN */
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 25px 0;
+            border: 1px solid #6B1615;
+            border-radius: 8px;
+            background-color: #2b2b2b; /* Un negro un poco más claro para contraste */
+            color: white;
+            font-family: 'Vollkorn', serif;
+            font-size: 16px;
+            box-sizing: border-box; 
+            outline: none;
+        }
+
+        input[type="text"]::placeholder {
+            color: #999;
+        }
+
+        input[type="text"]:focus, select:focus {
+            box-shadow: 0 0 8px rgba(107, 22, 21, 0.8);
+        }
+
+        /* CSS DEL BOTÓN ANIMADO */
+        .btn-contenedor {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        button {
+            font-family: 'Vollkorn', serif;
+            font-size: 20px;
+            background: #6B1615; /* Adaptado al Deep Maroon */
+            color: white;
+            fill: white; 
+            padding: 0.7em 1em;
+            padding-left: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            width: 100%;
+        }
+
+        button span {
+            display: block;
+            margin-left: 0.3em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button svg {
+            display: block;
+            transform-origin: center center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #4a0f0e; /* Un tono más oscuro del Maroon al pasar el mouse */
+        }
+
+        button:hover .svg-wrapper {
+            transform: scale(1.25);
+            transition: 0.5s linear;
+        }
+
+        button:hover svg {
+            transform: translateX(3em) scale(1.1); /* Distancia ajustada para la palabra "Descargar" */
+            fill: #fff;
+        }
+
+        button:hover span {
+            opacity: 0;
+            transition: 0.5s linear;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
     <div class="contenedor">
-        <h2>Descargador de Videos</h2>
+        <h2>Descargar Media</h2>
         <form action="/descargar" method="POST">
-            <input type="text" name="url" placeholder="Pega la URL de YouTube aquí" required><br>
+            <input type="text" name="url" placeholder="Pega la URL de YouTube aquí" required>
             
             <select name="formato">
                 <option value="1">Video (MP4)</option>
                 <option value="2">Solo Audio (MP3)</option>
-            </select><br>
+            </select>
 
-            <button type="submit">Descargar</button>
+            <div class="btn-contenedor">
+                <button type="submit">
+                  <div class="svg-wrapper-1">
+                    <div class="svg-wrapper">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" class="icon">
+                        <path d="M22,15.04C22,17.23 20.24,19 18.07,19H5.93C3.76,19 2,17.23 2,15.04C2,13.07 3.43,11.44 5.31,11.14C5.28,11 5.27,10.86 5.27,10.71C5.27,9.33 6.38,8.2 7.76,8.2C8.37,8.2 8.94,8.43 9.37,8.8C10.14,7.05 11.13,5.44 13.91,5.44C17.28,5.44 18.87,8.06 18.87,10.83C18.87,10.94 18.87,11.06 18.86,11.17C20.65,11.54 22,13.13 22,15.04Z"></path>
+                      </svg>
+                    </div>
+                  </div>
+                  <span>Descargar</span>
+                </button>
+            </div>
         </form>
     </div>
 </body>
