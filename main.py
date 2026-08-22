@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, send_file
 import yt_dlp
 import os
+import shutil
 
 app = Flask(__name__)
 
@@ -22,10 +23,15 @@ def descargar_video():
         'outtmpl': 'descargas/%(id)s.%(ext)s'
     }
 
-    # Le decimos a yt-dlp que use las cookies si el archivo secreto existe en Render
-    ruta_cookies = '/etc/secrets/cookies.txt'
-    if os.path.exists(ruta_cookies):
-        ydl_opts['cookiefile'] = ruta_cookies
+    # --- LA NUEVA LÓGICA DE COOKIES ---
+    ruta_secreta = '/etc/secrets/cookies.txt'
+    ruta_escribible = 'descargas/cookies.txt' 
+
+    # Si Render nos da el archivo secreto, lo copiamos a una carpeta donde sí podamos escribir
+    if os.path.exists(ruta_secreta):
+        shutil.copyfile(ruta_secreta, ruta_escribible)
+        ydl_opts['cookiefile'] = ruta_escribible
+    # ----------------------------------
 
     if opcion == "1":
         ydl_opts.update({
@@ -58,7 +64,7 @@ def descargar_video():
             return send_file(
                 ruta_archivo, 
                 as_attachment=True, 
-                download_name=f"{titulo}{ext_final}" # El usuario lo descarga con el nombre real
+                download_name=f"{titulo}{ext_final}" 
             )
     except Exception as e:
         return f"Ocurrió un error durante la descarga: {str(e)}"
